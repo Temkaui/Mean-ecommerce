@@ -25,16 +25,21 @@ class ProductController{
 				return res.json({errors: "This product name already exist, please type different name"});
 			}
 			else{
-				let prods = new Products(req.body);
+				if(req.body.name){
+					let prods = new Products(req.body);
 
-				prods.save((err)=>{
-					if(err){
-						return res.json({errors: "Product name must be 3 letters or more"});
-					}
-					else{
-						return res.json(prods);
-					}
-				});
+					prods.save((err)=>{
+						if(err){
+							return res.json({errors: "Product name must be 3 letters or more"});
+						}
+						else{
+							return res.json(prods);
+						}
+					});
+				}
+				else{
+					return res.json({errors: "name required"})
+				}
 			}
 		});
 	}
